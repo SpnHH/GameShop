@@ -15,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 using GameShop.EFDataAccess;
 using GameShop.ApplicationLogic.Services;
 using GameShop.ApplicationLogic.Abstractions;
+using Microsoft.EntityFrameworkCore.SqlServer;
 
 namespace GameShop
 {
@@ -49,7 +50,9 @@ namespace GameShop
             services.AddScoped<AdminServices>();
             services.AddScoped<UserServices>();
             services.AddControllersWithViews();
-         
+
+            
+
             services.AddRazorPages();
            
         }

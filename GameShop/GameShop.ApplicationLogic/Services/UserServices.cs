@@ -39,7 +39,7 @@ namespace GameShop.ApplicationLogic.Services
             }
 
             return gameRepository.GetAll()
-                            .Where(game => game.GameId != null && game.GameId == gameIdGuid)
+                            .Where(game => game.Id != null && game.Id == gameIdGuid)
                             .AsEnumerable();
 
         }
@@ -63,7 +63,6 @@ namespace GameShop.ApplicationLogic.Services
             orderRepository.Add(new Order()
             {
                 Id = Guid.NewGuid(),
-                OrderId = Guid.NewGuid(),
                 User = user,
                 Game= game,
                 Date = DateTime.Today,
@@ -107,7 +106,6 @@ namespace GameShop.ApplicationLogic.Services
             ratingRepository.Add(new Rating()
             {
                 Id = Guid.NewGuid(),
-                RatingId = Guid.NewGuid(),
                 User = user,
                 Rate = rate
             });

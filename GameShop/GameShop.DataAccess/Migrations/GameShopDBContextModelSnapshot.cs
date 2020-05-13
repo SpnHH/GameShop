@@ -15,7 +15,7 @@ namespace GameShop.EFDataAccess.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.3")
+                .HasAnnotation("ProductVersion", "3.1.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -23,9 +23,6 @@ namespace GameShop.EFDataAccess.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("AdminId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Email")
@@ -50,9 +47,6 @@ namespace GameShop.EFDataAccess.Migrations
 
                     b.Property<string>("Comm")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("CommentId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("GameId")
                         .HasColumnType("uniqueidentifier");
@@ -81,23 +75,18 @@ namespace GameShop.EFDataAccess.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("GameId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("OrderId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<float>("Price")
                         .HasColumnType("real");
 
+                    b.Property<string>("imgPath")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AdminId");
-
-                    b.HasIndex("OrderId");
 
                     b.ToTable("Games");
                 });
@@ -111,7 +100,7 @@ namespace GameShop.EFDataAccess.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("OrderId")
+                    b.Property<Guid?>("GameId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<float>("TotalValue")
@@ -121,6 +110,8 @@ namespace GameShop.EFDataAccess.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("GameId");
 
                     b.HasIndex("UserId");
 
@@ -138,9 +129,6 @@ namespace GameShop.EFDataAccess.Migrations
 
                     b.Property<float>("Rate")
                         .HasColumnType("real");
-
-                    b.Property<Guid>("RatingId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("UserId")
                         .HasColumnType("uniqueidentifier");
@@ -163,11 +151,8 @@ namespace GameShop.EFDataAccess.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Passord")
+                    b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");
@@ -193,14 +178,14 @@ namespace GameShop.EFDataAccess.Migrations
                     b.HasOne("GameShop.ApplicationLogic.Model.Admin", "Admin")
                         .WithMany()
                         .HasForeignKey("AdminId");
-
-                    b.HasOne("GameShop.ApplicationLogic.Model.Order", null)
-                        .WithMany("Game")
-                        .HasForeignKey("OrderId");
                 });
 
             modelBuilder.Entity("GameShop.ApplicationLogic.Model.Order", b =>
                 {
+                    b.HasOne("GameShop.ApplicationLogic.Model.Game", "Game")
+                        .WithMany()
+                        .HasForeignKey("GameId");
+
                     b.HasOne("GameShop.ApplicationLogic.Model.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");

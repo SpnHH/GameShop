@@ -15,7 +15,7 @@ namespace GameShop.EFDataAccess
         }
         public Admin GetAdminByAdminId(Guid UserId)
         {
-            return dbContext.Admins.Where(a => a.UserId == UserId).FirstOrDefault();
+            return dbContext.Admins.Where(a => a.Id == UserId).FirstOrDefault();
         }
         
     }

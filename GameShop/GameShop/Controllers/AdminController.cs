@@ -11,6 +11,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Drawing;
+using System.IO;
+using DocumentFormat.OpenXml.Vml;
+
+
 
 namespace GameShop.Controllers
 {
@@ -28,33 +33,54 @@ namespace GameShop.Controllers
             try
             {
                 var userId = userManager.GetUserId(User);
+                if (userId == null)
+                {
+                    return BadRequest("Null");
+                }
+
                 var admin = adminServices.GetAdminByAdminId(userId);
+
                 var GameList = adminServices.GetGameList();
 
                 return View(new AdminGamesViewModel { Admin = admin, Games = GameList });
             }
             catch (Exception)
             {
-                return BadRequest("Invalid request received ");
+                return BadRequest("aici se blocheaza");
             }
         }
 
 
-
+        [HttpPost]
         public IActionResult AddGame([FromForm]AdminAddGameViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
+            //string fileName = System.IO.Path.GetFileNameWithoutExtension(model.ImageFile.FileName);
+            //string externsion = System.IO.Path.GetExtension(model.ImageFile.FileName);
+            //fileName = fileName = DateTime.Now.ToString("yymmssfff") + externsion;
+            //var path = "~/GameImage/" +fileName;
+            //fileName = System.IO.Path.Combine (System.Web.Hosting.HostingEnvironment.MapPath);
+           
 
             var userId = userManager.GetUserId(User);
             adminServices.addGame(userId, model.Name, model.Price, model.Description);
-            return View();
+            return RedirectToAction("Index");
             // return Redirect(Url.Action("AddGame", "Admin"));
 
         }
+        [HttpGet]
+        public IActionResult AddGame([FromRoute] Game game)
+        {
+           // var game = adminServices.GetGamebyId(id).Single();
+            var gameVM = new AdminAddGameViewModel { Name = game.Name, Price = game.Price, Description = game.Description };
+            return View(gameVM);
 
+        }
+
+        [HttpPost]
         public IActionResult DeleteGame([FromForm]AdminDeleteGameViewModel model)
         {
             if (!ModelState.IsValid)
@@ -63,11 +89,20 @@ namespace GameShop.Controllers
             }
 
             var userId = userManager.GetUserId(User);
-            adminServices.deleteGame(userId, model.gameId);
+            adminServices.deleteGame(userId, model.Id);
             return Redirect(Url.Action("Index", "Admin"));
             // return Redirect(Url.Action("AddGame", "Admin"));
 
         }
+        [HttpGet]
+        public IActionResult DeleteGame([FromRoute]string id)
+        {
+            var game = adminServices.GetGamebyId(id).Single();
+            var gameVM = new AdminDeleteGameViewModel { Id = game.Id};
+            return View(gameVM);
+
+        }
+
         [HttpPost]
         public IActionResult EditGame([FromForm]AdminEditGameView model)
         {
