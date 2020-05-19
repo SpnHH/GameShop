@@ -9,36 +9,17 @@ using System.Text;
 
 namespace GameShop.EFDataAccess
 {
-    public class RatingRepository : BaseRepository<Comment>, IRatingRepository
+    public class RatingRepository : BaseRepository<Rating>, IRatingRepository
     {
         public RatingRepository(GameShopDBContext dBContext) : base(dBContext)
         {
 
         }
 
-        public Rating Add(Rating itemToAdd)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Delete(Rating itemToDelete)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Rating GetRating(Guid ratingId, Game game, User user)
+        public Rating GetRating(Guid ratingId)
         {
             return dbContext.Ratings.Where(a => a.Id == ratingId).FirstOrDefault();
         }
 
-        public Rating Update(Rating itemToUpdate)
-        {
-            throw new NotImplementedException();
-        }
-
-        IEnumerable<Rating> IRepository<Rating>.GetAll()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

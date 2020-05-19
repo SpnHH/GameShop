@@ -8,7 +8,7 @@ namespace GameShop.ApplicationLogic.Model
     {
         public Guid Id { get; set; }
         public User User { get; set; }
-        public Game Game { get; set; }
+        public Guid GameId { get; set; }
         public DateTime Date { get; set; }
         public float TotalValue { get; set; }
        

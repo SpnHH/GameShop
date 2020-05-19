@@ -7,5 +7,7 @@ namespace GameShop.Models.Users
 {
     public class UserAddRatingViewModel
     {
+        public Guid gameID { get; set; }
+        public float Rate { get; set; }
     }
 }

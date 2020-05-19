@@ -15,6 +15,7 @@ namespace GameShop.ApplicationLogic.Services
         private ICommentRepository commentRepository;
         private IOrderRepository orderRepository;
         private IRatingRepository ratingRepository;
+   
 
         public UserServices(IUserRepository userRepository, IGameRepository gameRepository, ICommentRepository commentRepository, IOrderRepository orderRepository, IRatingRepository ratingRepository)
         {
@@ -43,8 +44,16 @@ namespace GameShop.ApplicationLogic.Services
                             .AsEnumerable();
 
         }
+        public IEnumerable<Game> GetGamebyGuid(Guid gameId)
+        {
+           
+            return gameRepository.GetAll()
+                            .Where(game => game.Id != null && game.Id == gameId)
+                            .AsEnumerable();
 
-        public void addOrder(String userId, String orderId, String gameId)
+        }
+
+        public void addOrder(String userId, Guid gameId)
         {
             Guid userIdGuid = Guid.Empty;
             if (!Guid.TryParse(userId, out userIdGuid))
@@ -52,28 +61,20 @@ namespace GameShop.ApplicationLogic.Services
                 throw new Exception("Invalid Guid Format");
             }
             var user = userRepository.GetUserById(userIdGuid);
-
-            Guid gameIdGuid = Guid.Empty;
-            if (!Guid.TryParse(gameId, out gameIdGuid))
-            {
-                throw new Exception("Invalid Guid Format");
-            }
-            var game = gameRepository.GetGamebyId(gameIdGuid);
-
+            var game = gameRepository.GetGamebyId(gameId);
             orderRepository.Add(new Order()
             {
                 Id = Guid.NewGuid(),
                 User = user,
-                Game= game,
                 Date = DateTime.Today,
-                TotalValue = game.Price
+                TotalValue = game.Price,
+                GameId = game.Id
 
             }) ; 
 
-
         }
 
-        public void addComment(String userId, String commentId, String gameId, String comm)
+        public void addComment(String userId, Guid gameId, String comm)
         {
             Guid userIdGuid = Guid.Empty;
             if (!Guid.TryParse(userId, out userIdGuid))
@@ -81,20 +82,23 @@ namespace GameShop.ApplicationLogic.Services
                 throw new Exception("Invalid Guid Format");
             }
             var user = userRepository.GetUserById(userIdGuid);
+           
+            
+            Guid commId = Guid.NewGuid();
 
-            //commentRepository.Add(new Comment()
-            //{
-            //    Id = Guid.NewGuid(),
-            //    CommentId = Guid.NewGuid(),
-            //    User = user,
-            //    Comm = comm
-
-            //}) ;
+            commentRepository.Add(new Comment()
+            {
+                Id = commId,
+                User = user,
+                Comm = comm,
+                GameId = gameId
+            }); 
+            
             
 
         }
 
-        public void addRaing(String userId, String gameId, float rate)
+        public void addRating(String userId, Guid gameId, float rate)
         {
             Guid userIdGuid = Guid.Empty;
             if (!Guid.TryParse(userId, out userIdGuid))
@@ -102,14 +106,18 @@ namespace GameShop.ApplicationLogic.Services
                 throw new Exception("Invalid Guid Format");
             }
             var user = userRepository.GetUserById(userIdGuid);
-
+            Guid RatingId = Guid.NewGuid();
+            
             ratingRepository.Add(new Rating()
             {
-                Id = Guid.NewGuid(),
+                Id = RatingId,
                 User = user,
-                Rate = rate
-            });
+                Rate = rate,
+                GameId = gameId
+            });        
         }
+
+
 
     }
 

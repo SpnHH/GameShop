@@ -75,14 +75,14 @@ namespace GameShop.EFDataAccess.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ImageFile")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<float>("Price")
                         .HasColumnType("real");
-
-                    b.Property<string>("imgPath")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

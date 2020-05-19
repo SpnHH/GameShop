@@ -6,6 +6,6 @@ namespace GameShop.ApplicationLogic.Abstractions
 {
     public interface IRatingRepository : IRepository<Rating>
     {
-        Rating GetRating(Guid ratingId, Game game, User user);
+        Rating GetRating(Guid ratingId);
     }
 }

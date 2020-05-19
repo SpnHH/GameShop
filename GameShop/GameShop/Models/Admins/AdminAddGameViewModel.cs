@@ -17,8 +17,6 @@ namespace GameShop.Models.Admins
         public float Price { get; set; }
         public string Description { get; set; }
         [DisplayName("Upload File")]
-        public string imgPath { get; set; }
-
         public IFormFile ImageFile { get; set; }
     }
 }

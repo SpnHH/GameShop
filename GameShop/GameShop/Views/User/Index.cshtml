@@ -1,0 +1,17 @@
+﻿@model GameShop.Models.Users.UserGameViewModel;
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+@foreach (var game in Model.Games)
+{
+<div>
+    <p>Name: @game.Name </p>
+    Price: @game.Price $
+    <a asp-controller="User" asp-action="AddComment" asp-route-id="@game.Id">AddComm |</a>
+
+    <a asp-controller="User" asp-action="AddRating" asp-route-id="@game.Id">Rate game |</a>
+    <a asp-controller="User" asp-action="AddOrder" asp-route-id="@game.Id">Order|</a>
+</div>
+}

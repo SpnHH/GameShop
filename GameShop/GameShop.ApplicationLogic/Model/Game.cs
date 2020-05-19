@@ -17,10 +17,7 @@ namespace GameShop.ApplicationLogic.Model
         public String Name { get; set; }
         public float Price { get; set; }
         public String Description { get; set; }
-       // [DisplayName("Upload File")]
-        public string imgPath { get; set; }
-
-       // public IFormFile ImageFile { get;set; }
+        public string ImageFile { get;set; }
 
     }
 }

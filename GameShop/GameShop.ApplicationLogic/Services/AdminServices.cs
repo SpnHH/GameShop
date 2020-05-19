@@ -54,7 +54,7 @@ namespace GameShop.ApplicationLogic.Services
 
         }
 
-        public void addGame(String userId, String gameName, float gamePrice, String gameDescription)
+        public void addGame(String userId, String gameName, float gamePrice, String gameDescription, String Image)
         {
             Guid userIdGuid = Guid.Empty;
             if (!Guid.TryParse(userId, out userIdGuid))
@@ -73,7 +73,8 @@ namespace GameShop.ApplicationLogic.Services
                 Admin = admin,
                 Name = gameName,
                 Price = gamePrice,
-                Description = gameDescription
+                Description = gameDescription,
+                ImageFile = Image
             }) ;
 
 

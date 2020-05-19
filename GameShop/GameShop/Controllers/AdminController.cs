@@ -66,7 +66,7 @@ namespace GameShop.Controllers
            
 
             var userId = userManager.GetUserId(User);
-            adminServices.addGame(userId, model.Name, model.Price, model.Description);
+            adminServices.addGame(userId, model.Name, model.Price, model.Description, " ");
             return RedirectToAction("Index");
             // return Redirect(Url.Action("AddGame", "Admin"));
 

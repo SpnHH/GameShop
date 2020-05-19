@@ -7,6 +7,8 @@ namespace GameShop.Models.Users
 {
     public class UserAddCommentViewModel
     {
-         
+        public Guid gameID { get; set; }
+        public String Comm { get; set; }
+
     }
 }
