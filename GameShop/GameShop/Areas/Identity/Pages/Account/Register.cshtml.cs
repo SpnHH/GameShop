@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using GameShop.ApplicationLogic.Abstractions;
+using GameShop.ApplicationLogic.Model;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -23,17 +25,20 @@ namespace GameShop.Areas.Identity.Pages.Account
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private IUserRepository userRepository;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IUserRepository userRep)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            userRepository = userRep;
         }
 
         [BindProperty]
@@ -76,8 +81,22 @@ namespace GameShop.Areas.Identity.Pages.Account
             {
                 var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
+                
+
                 if (result.Succeeded)
                 {
+                    Guid userId = Guid.Empty;
+                    Guid.TryParse(user.Id, out userId);
+                    userRepository.Add(new User()
+                    {
+                        Id = userId,
+                        UserName = user.UserName,
+                        Password = "",
+                        Email = user.Email
+                    });
+                    _userManager.AddToRoleAsync(user, "User")
+                            .GetAwaiter()
+                            .GetResult();
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -100,6 +119,7 @@ namespace GameShop.Areas.Identity.Pages.Account
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         return LocalRedirect(returnUrl);
                     }
+
                 }
                 foreach (var error in result.Errors)
                 {

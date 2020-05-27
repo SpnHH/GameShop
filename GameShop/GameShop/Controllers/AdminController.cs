@@ -22,11 +22,13 @@ namespace GameShop.Controllers
     public class AdminController : Controller
     {
         private readonly UserManager<IdentityUser> userManager;
+        private readonly RoleManager<IdentityRole> roleManager;
         private readonly AdminServices adminServices;
-        public AdminController(UserManager<IdentityUser> userManager, AdminServices adminServices)
+        public AdminController(UserManager<IdentityUser> userManager, AdminServices adminServices, RoleManager<IdentityRole> roleManager)
         {
             this.userManager = userManager;
             this.adminServices = adminServices;
+            this.roleManager = roleManager;
         }
         public ActionResult Index()
         {
@@ -63,10 +65,19 @@ namespace GameShop.Controllers
             //fileName = fileName = DateTime.Now.ToString("yymmssfff") + externsion;
             //var path = "~/GameImage/" +fileName;
             //fileName = System.IO.Path.Combine (System.Web.Hosting.HostingEnvironment.MapPath);
-           
+            string image = "";
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            using (var memoryStream = new MemoryStream())
+            {
+                model.ImageFile.CopyTo(memoryStream);
+                image = Convert.ToBase64String(memoryStream.ToArray());
+            }
 
             var userId = userManager.GetUserId(User);
-            adminServices.addGame(userId, model.Name, model.Price, model.Description, " ");
+            adminServices.addGame(userId, model.Name, model.Price, model.Description, image);
             return RedirectToAction("Index");
             // return Redirect(Url.Action("AddGame", "Admin"));
 
@@ -89,6 +100,7 @@ namespace GameShop.Controllers
             }
 
             var userId = userManager.GetUserId(User);
+
             adminServices.deleteGame(userId, model.Id);
             return Redirect(Url.Action("Index", "Admin"));
             // return Redirect(Url.Action("AddGame", "Admin"));
@@ -124,6 +136,30 @@ namespace GameShop.Controllers
             var game = adminServices.GetGamebyId(id).Single();
             var gameVM = new AdminEditGameView { Id = game.Id, Name = game.Name, Price = game.Price, Description = game.Description };
             return View(gameVM);
+
+        }
+        [HttpGet]
+        public IActionResult CreateRole()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateRole(CreateRoleViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                IdentityRole identityRole = new IdentityRole { Name = model.roleName };
+
+                IdentityResult result = await roleManager.CreateAsync(identityRole);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("index", "home");
+                }
+
+            }
+      
+            return View(model);
 
         }
 

@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace GameShop.ApplicationLogic.Services
 {
@@ -15,7 +17,9 @@ namespace GameShop.ApplicationLogic.Services
         private ICommentRepository commentRepository;
         private IOrderRepository orderRepository;
         private IRatingRepository ratingRepository;
-   
+        SignInManager<IdentityUser> signInManager;
+        UserManager<IdentityUser> userManager;
+        
 
         public UserServices(IUserRepository userRepository, IGameRepository gameRepository, ICommentRepository commentRepository, IOrderRepository orderRepository, IRatingRepository ratingRepository)
         {
@@ -23,12 +27,22 @@ namespace GameShop.ApplicationLogic.Services
             this.gameRepository = gameRepository;
             this.commentRepository = commentRepository;
             this.orderRepository = orderRepository;
-            this.ratingRepository = ratingRepository;
+            this.ratingRepository = ratingRepository;           
         }
 
         public IEnumerable<Game> GetGameList()
         {
             return gameRepository.GetAll();
+        }
+
+        public IEnumerable<Order> GetOrderById(string orderId)
+        {
+            Guid orderIdGuid = Guid.Empty;
+            if (!Guid.TryParse(orderId, out orderIdGuid))
+            {
+                throw new Exception("Invalid Guid Format");
+            }
+            return orderRepository.GetOrderByUserId(orderIdGuid);
         }
 
         public IEnumerable<Game> GetGamebyId(string gameId)
@@ -62,6 +76,7 @@ namespace GameShop.ApplicationLogic.Services
             }
             var user = userRepository.GetUserById(userIdGuid);
             var game = gameRepository.GetGamebyId(gameId);
+            
             orderRepository.Add(new Order()
             {
                 Id = Guid.NewGuid(),
@@ -89,9 +104,10 @@ namespace GameShop.ApplicationLogic.Services
             commentRepository.Add(new Comment()
             {
                 Id = commId,
-                User = user,
+                UserId = user.Id,
                 Comm = comm,
-                GameId = gameId
+                GameId = gameId,
+                Username = user.Email
             }); 
             
             
@@ -117,7 +133,22 @@ namespace GameShop.ApplicationLogic.Services
             });        
         }
 
-
+        public IEnumerable<Comment> GetComments(Game game)
+        {
+            return commentRepository.GetCommentByGameId(game.Id);
+        }
+        public float GetAverageRating(Game game)
+        {
+            var ratings = ratingRepository.GetRatingByGameId(game.Id);
+            int count = 0;
+            float avg = 0;
+            foreach( var rate in ratings)
+            {
+                avg += rate.Rate;
+                count++;
+            }
+            return (avg / count);
+        }
 
     }
 

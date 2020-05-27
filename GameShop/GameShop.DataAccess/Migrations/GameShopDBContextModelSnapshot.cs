@@ -48,17 +48,18 @@ namespace GameShop.EFDataAccess.Migrations
                     b.Property<string>("Comm")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("GameId")
+                    b.Property<Guid>("GameId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("UserId")
+                    b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("username")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("GameId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Comments");
                 });
@@ -100,7 +101,7 @@ namespace GameShop.EFDataAccess.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("GameId")
+                    b.Property<Guid>("GameId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<float>("TotalValue")
@@ -110,8 +111,6 @@ namespace GameShop.EFDataAccess.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("GameId");
 
                     b.HasIndex("UserId");
 
@@ -124,7 +123,7 @@ namespace GameShop.EFDataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("GameId")
+                    b.Property<Guid>("GameId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<float>("Rate")
@@ -166,11 +165,9 @@ namespace GameShop.EFDataAccess.Migrations
                 {
                     b.HasOne("GameShop.ApplicationLogic.Model.Game", null)
                         .WithMany("Comment")
-                        .HasForeignKey("GameId");
-
-                    b.HasOne("GameShop.ApplicationLogic.Model.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("GameShop.ApplicationLogic.Model.Game", b =>
@@ -182,10 +179,6 @@ namespace GameShop.EFDataAccess.Migrations
 
             modelBuilder.Entity("GameShop.ApplicationLogic.Model.Order", b =>
                 {
-                    b.HasOne("GameShop.ApplicationLogic.Model.Game", "Game")
-                        .WithMany()
-                        .HasForeignKey("GameId");
-
                     b.HasOne("GameShop.ApplicationLogic.Model.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
@@ -195,7 +188,9 @@ namespace GameShop.EFDataAccess.Migrations
                 {
                     b.HasOne("GameShop.ApplicationLogic.Model.Game", null)
                         .WithMany("Rating")
-                        .HasForeignKey("GameId");
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("GameShop.ApplicationLogic.Model.User", "User")
                         .WithMany()

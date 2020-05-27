@@ -14,9 +14,20 @@ namespace GameShop.DataAccess
         {
 
         }
+
+        public IEnumerable<Comment> GetCommentByGameId(Guid gameId)
+        {
+            return dbContext.Comments.Where(a => a.GameId == gameId).AsEnumerable();
+        }
+
         public Comment GetCommentById(Guid commentId)
         {
             return dbContext.Comments.Where(a => a.Id == commentId).FirstOrDefault();
+        }
+
+        public IEnumerable<Comment> GetCommentByUserId(Guid userId)
+        {
+            return dbContext.Comments.Where(a => a.Id == userId).AsEnumerable(); 
         }
     }
 }

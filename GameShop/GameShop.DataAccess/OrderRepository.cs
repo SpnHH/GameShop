@@ -16,17 +16,21 @@ namespace GameShop.EFDataAccess
 
         }
 
-       
+        public IEnumerable<Order> GetOrderByGameId(Guid gameId)
+        {
+            return dbContext.Orders.Where(a => a.GameId == gameId).AsEnumerable();
+        }
 
         public Order GetOrderByOrdeId(Guid orderId, User user)
         {
             return dbContext.Orders.Where(a => a.Id == orderId).FirstOrDefault();
         }
 
-
-        IEnumerable<Order> IRepository<Order>.GetAll()
+        public IEnumerable<Order> GetOrderByUserId(Guid userId)
         {
-            throw new NotImplementedException();
+            return dbContext.Orders.Where(a => a.User.Id == userId).AsEnumerable();
         }
+
+      
     }
 }

@@ -21,5 +21,9 @@ namespace GameShop.EFDataAccess
             return dbContext.Ratings.Where(a => a.Id == ratingId).FirstOrDefault();
         }
 
+        public IEnumerable<Rating> GetRatingByGameId(Guid gameId)
+        {
+            return dbContext.Ratings.Where(a => a.GameId == gameId).AsEnumerable();
+        }
     }
 }

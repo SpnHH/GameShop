@@ -12,11 +12,25 @@ namespace GameShop.ApplicationLogic.Services
     {
         private IAdminRepository adminRepository;
         private IGameRepository gameRepository;
+        private IUserRepository userRepository;
+        private ICommentRepository commentRepository;
+        private IOrderRepository orderRepository;
+        private IRatingRepository ratingRepository;
 
-        public AdminServices(IAdminRepository adminRepository, IGameRepository gameRepository)
-        {
+        public AdminServices(IAdminRepository adminRepository,
+                             IGameRepository gameRepository,
+                             IUserRepository userRepository,
+                             ICommentRepository commentRepository,
+                             IOrderRepository orderRepository,
+                             IRatingRepository ratingRepository
+                            )
+        { 
             this.gameRepository = gameRepository;
             this.adminRepository = adminRepository;
+            this.userRepository = userRepository;
+            this.commentRepository = commentRepository;
+            this.orderRepository = orderRepository;
+            this.ratingRepository = ratingRepository;
 
         }
         public Admin GetAdminByAdminId(string userId)
@@ -93,15 +107,52 @@ namespace GameShop.ApplicationLogic.Services
                 throw new EntityNotFoundException(userIdGuid);
             }
 
-           
+
             var game = gameRepository.GetGamebyId(gameId);
             if (game == null)
             {
                 throw new EntityNotFoundException(userIdGuid);
             }
+            Guid DummyId = Guid.Empty;
 
-            gameRepository.Delete(game);
 
+            var comments = commentRepository.GetCommentByGameId(gameId).ToList();
+            var orders = orderRepository.GetOrderByGameId(gameId).ToList();
+            var ratings = ratingRepository.GetRatingByGameId(gameId).ToList();
+            if (comments != null)
+            {
+                foreach (var comment in comments)
+                {
+                    commentRepository.Delete(comment);
+                }
+            }
+            if (orders != null)
+            {
+                foreach (var order in orders)
+                {
+                    order.GameId = Guid.Empty;
+                    orderRepository.Update(order);
+                    //orderRepository.Add(new Order()
+                    //{                    
+                    //    Id = order.Id,
+                    //    User = order.User,
+                    //    Date = order.Date,
+                    //    TotalValue = order.TotalValue,
+                    //    GameId = DummyId
+                    //});
+                }
+
+                if (ratings != null)
+                {
+                    foreach (var rating in ratings)
+                    {
+                        ratingRepository.Delete(rating);
+                    }
+                }
+
+                gameRepository.Delete(game);
+
+            }
         }
         public void editGame(String userId, Guid gameId , String gameName, float Price, String gameDescription)
         {

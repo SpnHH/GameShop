@@ -24,15 +24,32 @@ namespace GameShop.Controllers
             this.userServices = userServices;
         }
 
+        public IActionResult ViewGame([FromRoute] string id)
+        {
+            var game = userServices.GetGamebyId(id).Single();
+            var rating = userServices.GetAverageRating(game);
+            var comments = userServices.GetComments(game);
+            var gameVM = new UserMainGameViewModel { Game = game, Comments = comments, Rating = rating };
+            return View(gameVM);
+        }
+
+        public IActionResult ViewOrders([FromRoute] string id)
+        {
+            var order = userServices.GetOrderById(id);
+            var game = userServices.GetGameList();
+            var gameVM = new ViewOrders {Orders = order, Games = game };
+            return View(gameVM);
+        }
+
         public ActionResult Index()
         {
             try
             {
-                var userId = userManager.GetUserId(User);
-                if (userId == null)
-                {
-                    return BadRequest("Null");
-                }           
+                //var userId = userManager.GetUserId(User);
+                //if (userId == null)
+                //{
+                //    return BadRequest("Null");
+                //}           
 
                 var GameList = userServices.GetGameList();
 
@@ -55,8 +72,14 @@ namespace GameShop.Controllers
             var userId = userManager.GetUserId(User);
 
             userServices.addComment(userId, model.gameID, model.Comm);
+            //var game = userServices.GetGamebyGuid(model.gameID).Single();
+            //var rating = userServices.GetAverageRating(game);
+            //var comments = userServices.GetComments(game);
+            //var gameVM = new UserMainGameViewModel { Game = game, Comments = comments, Rating = rating };
+            ViewGame(model.gameID.ToString());
             return RedirectToAction("Index");
-            // return Redirect(Url.Action("Index", "Admin"));
+
+
         }
 
         [HttpGet]
@@ -64,6 +87,35 @@ namespace GameShop.Controllers
         {
             var game = userServices.GetGamebyId(id).Single();
             var gameVM = new UserAddCommentViewModel { gameID = game.Id};
+            return View(gameVM);
+
+        }
+
+        public IActionResult DeleteComment([FromForm] UserAddCommentViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            var userId = userManager.GetUserId(User);
+
+            userServices.addComment(userId, model.gameID, model.Comm);
+            //var game = userServices.GetGamebyGuid(model.gameID).Single();
+            //var rating = userServices.GetAverageRating(game);
+            //var comments = userServices.GetComments(game);
+            //var gameVM = new UserMainGameViewModel { Game = game, Comments = comments, Rating = rating };
+            ViewGame(model.gameID.ToString());
+            return RedirectToAction("Index");
+
+
+        }
+
+        [HttpGet]
+        public IActionResult DeleteComment([FromRoute] string id)
+        {
+            var game = userServices.GetGamebyId(id).Single();
+            var gameVM = new UserAddCommentViewModel { gameID = game.Id };
             return View(gameVM);
 
         }
@@ -80,6 +132,9 @@ namespace GameShop.Controllers
             var userId = userManager.GetUserId(User);
 
             userServices.addRating(userId, model.gameID, model.Rate);
+
+
+           
             return RedirectToAction("Index");
             // return Redirect(Url.Action("Index", "Admin"));
         }
@@ -93,6 +148,7 @@ namespace GameShop.Controllers
 
         }
 
+        [HttpPost]
         public IActionResult AddOrder([FromForm]AddOrderModelView model)
         {
             if (!ModelState.IsValid)
@@ -114,6 +170,9 @@ namespace GameShop.Controllers
             return View(gameVM);
 
         }
+
+       
+
 
     }
 

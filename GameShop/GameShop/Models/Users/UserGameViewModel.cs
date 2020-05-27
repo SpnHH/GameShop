@@ -8,5 +8,6 @@ namespace GameShop.Models.Users
     public class UserGameViewModel
     {
         public IEnumerable<Game> Games { get; set; }
+
     }
 }
