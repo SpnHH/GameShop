@@ -5,4 +5,5 @@ C:\Users\traia\source\repos\GameShop\GameShop.ApplicationLogic\obj\Debug\netstan
 C:\Users\traia\source\repos\GameShop\GameShop.ApplicationLogic\obj\Debug\netstandard2.0\GameShop.ApplicationLogic.AssemblyInfo.cs
 C:\Users\traia\source\repos\GameShop\GameShop.ApplicationLogic\obj\Debug\netstandard2.0\GameShop.ApplicationLogic.dll
 C:\Users\traia\source\repos\GameShop\GameShop.ApplicationLogic\obj\Debug\netstandard2.0\GameShop.ApplicationLogic.pdb
+C:\Users\traia\source\repos\GameShop\GameShop.ApplicationLogic\obj\Debug\netstandard2.0\GameShop.ApplicationLogic.csproj.CoreCompileInputs.cache
 C:\Users\traia\source\repos\GameShop\GameShop.ApplicationLogic\obj\Debug\netstandard2.0\GameShop.ApplicationLogic.csprojAssemblyReference.cache
