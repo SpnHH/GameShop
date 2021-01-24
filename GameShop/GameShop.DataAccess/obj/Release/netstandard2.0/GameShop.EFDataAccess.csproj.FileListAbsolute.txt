@@ -1,0 +1,4 @@
+C:\Users\Traian\source\repos\GameShop\GameShop.DataAccess\obj\Release\netstandard2.0\GameShop.EFDataAccess.csprojAssemblyReference.cache
+C:\Users\Traian\source\repos\GameShop\GameShop.DataAccess\obj\Release\netstandard2.0\GameShop.EFDataAccess.AssemblyInfoInputs.cache
+C:\Users\Traian\source\repos\GameShop\GameShop.DataAccess\obj\Release\netstandard2.0\GameShop.EFDataAccess.AssemblyInfo.cs
+C:\Users\Traian\source\repos\GameShop\GameShop.DataAccess\obj\Release\netstandard2.0\GameShop.EFDataAccess.csproj.CoreCompileInputs.cache

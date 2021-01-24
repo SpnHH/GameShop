@@ -52,6 +52,28 @@ namespace GameShop.Controllers
             }
         }
 
+        public ActionResult OutOfStock()
+        {
+            try
+            {
+                var userId = userManager.GetUserId(User);
+                if (userId == null)
+                {
+                    return BadRequest("Null");
+                }
+
+                var admin = adminServices.GetAdminByAdminId(userId);
+
+                var GameList = adminServices.GetGameList();
+
+                return View(new AdminGamesViewModel { Admin = admin, Games = GameList });
+            }
+            catch (Exception)
+            {
+                return BadRequest("aici se blocheaza");
+            }
+        }
+
 
         [HttpPost]
         public IActionResult AddGame([FromForm]AdminAddGameViewModel model)
@@ -60,11 +82,6 @@ namespace GameShop.Controllers
             {
                 return BadRequest();
             }
-            //string fileName = System.IO.Path.GetFileNameWithoutExtension(model.ImageFile.FileName);
-            //string externsion = System.IO.Path.GetExtension(model.ImageFile.FileName);
-            //fileName = fileName = DateTime.Now.ToString("yymmssfff") + externsion;
-            //var path = "~/GameImage/" +fileName;
-            //fileName = System.IO.Path.Combine (System.Web.Hosting.HostingEnvironment.MapPath);
             string image = "";
             if (!ModelState.IsValid)
             {
@@ -77,16 +94,15 @@ namespace GameShop.Controllers
             }
 
             var userId = userManager.GetUserId(User);
-            adminServices.addGame(userId, model.Name, model.Price, model.Description, image);
+            adminServices.addGame(userId, model.Name, model.Price, model.Description, image, model.Stock, model.Category);
             return RedirectToAction("Index");
-            // return Redirect(Url.Action("AddGame", "Admin"));
+ 
 
         }
         [HttpGet]
         public IActionResult AddGame([FromRoute] Game game)
         {
-           // var game = adminServices.GetGamebyId(id).Single();
-            var gameVM = new AdminAddGameViewModel { Name = game.Name, Price = game.Price, Description = game.Description };
+            var gameVM = new AdminAddGameViewModel { Name = game.Name, Price = game.Price, Description = game.Description, Stock = game.Stock, Category = game.Category};
             return View(gameVM);
 
         }
@@ -125,7 +141,7 @@ namespace GameShop.Controllers
 
             var userId = userManager.GetUserId(User);
 
-            adminServices.editGame(userId, model.Id, model.Name, model.Price, model.Description);
+            adminServices.editGame(userId, model.Id, model.Name, model.Price, model.Description, model.Stock, model.Category);
             return RedirectToAction("Index");
             // return Redirect(Url.Action("Index", "Admin"));
         }
@@ -134,7 +150,7 @@ namespace GameShop.Controllers
         public IActionResult EditGame([FromRoute]string id)
         {
             var game = adminServices.GetGamebyId(id).Single();
-            var gameVM = new AdminEditGameView { Id = game.Id, Name = game.Name, Price = game.Price, Description = game.Description };
+            var gameVM = new AdminEditGameView { Id = game.Id, Name = game.Name, Price = game.Price, Description = game.Description, Stock = game.Stock, Category = game.Category };
             return View(gameVM);
 
         }

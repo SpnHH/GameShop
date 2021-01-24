@@ -13,7 +13,6 @@
 </head>
 
 <body>
-
     <div>
         <div>
             <img src="data:image/png;base64, @Model.Game.ImageFile" width="350" height="500" alt="" class="center" />
@@ -26,11 +25,12 @@
         @if (User.IsInRole("User") || User.IsInRole("Admin"))
         {
 
-            <h4 align="center">
-                <a align="center" class="btn btn-danger" asp-controller="User" asp-action="AddComment" asp-route-id="@Model.Game.Id">AddComm  </a>
-                <a align="center" class="btn btn-danger" asp-controller="User" asp-action="AddRating" asp-route-id="@Model.Game.Id">Rate game   </a>
-                <a align="center" class="btn btn-danger" asp-action="AddOrder" asp-route-id="@Model.Game.Id">Order    </a>
-            </h4>
+    <h4 align="center">
+        <a align="center" class="btn btn-danger" asp-controller="User" asp-action="AddComment" asp-route-id="@Model.Game.Id">AddComm  </a>
+        <a align="center" class="btn btn-danger" asp-controller="User" asp-action="AddRating" asp-route-id="@Model.Game.Id">Rate game   </a>
+        <a align="center" class="btn btn-danger" asp-action="AddOrder" asp-route-id="@Model.Game.Id">Add to Wishlist     </a>
+        <a align="center" class="btn btn-danger" asp-controller="User" asp-action="AddCart" asp-route-id="@Model.Game.Id">Add to Cart</a>
+    </h4>
         }
     </div>
     <div class="border border-dark" style="background-color:white">

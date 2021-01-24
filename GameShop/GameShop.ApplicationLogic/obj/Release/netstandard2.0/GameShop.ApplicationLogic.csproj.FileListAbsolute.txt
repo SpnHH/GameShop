@@ -1,0 +1,9 @@
+C:\Users\Traian\source\repos\GameShop\GameShop.ApplicationLogic\bin\Release\netstandard2.0\GameShop.ApplicationLogic.deps.json
+C:\Users\Traian\source\repos\GameShop\GameShop.ApplicationLogic\bin\Release\netstandard2.0\GameShop.ApplicationLogic.dll
+C:\Users\Traian\source\repos\GameShop\GameShop.ApplicationLogic\bin\Release\netstandard2.0\GameShop.ApplicationLogic.pdb
+C:\Users\Traian\source\repos\GameShop\GameShop.ApplicationLogic\obj\Release\netstandard2.0\GameShop.ApplicationLogic.csprojAssemblyReference.cache
+C:\Users\Traian\source\repos\GameShop\GameShop.ApplicationLogic\obj\Release\netstandard2.0\GameShop.ApplicationLogic.AssemblyInfoInputs.cache
+C:\Users\Traian\source\repos\GameShop\GameShop.ApplicationLogic\obj\Release\netstandard2.0\GameShop.ApplicationLogic.AssemblyInfo.cs
+C:\Users\Traian\source\repos\GameShop\GameShop.ApplicationLogic\obj\Release\netstandard2.0\GameShop.ApplicationLogic.csproj.CoreCompileInputs.cache
+C:\Users\Traian\source\repos\GameShop\GameShop.ApplicationLogic\obj\Release\netstandard2.0\GameShop.ApplicationLogic.dll
+C:\Users\Traian\source\repos\GameShop\GameShop.ApplicationLogic\obj\Release\netstandard2.0\GameShop.ApplicationLogic.pdb

@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameShop", "GameShop\GameShop.csproj", "{AE0A04AA-B8D9-404C-9C95-65095D53F068}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameShop", "GameShop\GameShop.csproj", "{AE0A04AA-B8D9-404C-9C95-65095D53F068}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameShop.ApplicationLogic", "GameShop.ApplicationLogic\GameShop.ApplicationLogic.csproj", "{9DA45520-9E2F-4A6D-925B-C895BDB512CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameShop.ApplicationLogic", "GameShop.ApplicationLogic\GameShop.ApplicationLogic.csproj", "{9DA45520-9E2F-4A6D-925B-C895BDB512CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameShop.EFDataAccess", "GameShop.DataAccess\GameShop.EFDataAccess.csproj", "{F545018B-8EF3-4116-9E4B-C009994725D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameShop.EFDataAccess", "GameShop.DataAccess\GameShop.EFDataAccess.csproj", "{F545018B-8EF3-4116-9E4B-C009994725D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

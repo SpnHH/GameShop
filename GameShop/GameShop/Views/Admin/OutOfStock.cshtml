@@ -1,0 +1,51 @@
+﻿@model GameShop.Models.Admins.AdminGamesViewModel;
+@{
+    ViewData["Title"] = "Out of stock games";
+}
+    <link href="~/css/site.css" rel="stylesheet" />
+    <div class="row" style="align-content">
+        @foreach (var game in Model.Games)
+        {
+            <!--
+        <div class="col-md-3 product-men">
+            <div class="product-chr-info chr">
+                <div class="img-thumbnail" >
+                    <a>
+                        <img src="data:image/png;base64, @game.ImageFile" width="300" height="500" alt="" />
+                    </a>
+                </div>
+                <div class="caption">
+                    <p>Name: @game.Name </p>
+                    <p>Id: @game.Id </p>
+                    <p>Price: @game.Price $</p>
+                </div>
+                <a asp-controller="Admin" asp-action="DeleteGame" asp-route-id="@game.Id">Delete Game</a>
+                <a asp-controller="Admin" asp-action="EditGame" asp-route-id="@game.Id">Edit Game</a>
+            </div>
+        </div>
+
+        -->
+            @if ((game.Id != Guid.Empty) && (game.Stock == 0) )
+            {
+
+                <div class="col-xl-4 col-lg-4 col-md-6" style="border-style: groove">
+                    <div class="single-product mb-60">
+                        <div class="product-img">
+                            <img src="data:image/png;base64, @game.ImageFile" width="350" height="500" alt="" />
+                        </div>
+                        <div class="product-caption">
+                            <h4 align="center">@game.Name</h4>
+                            <h4 align="center">@game.Price </h4>
+                        </div>
+                        <div align="center">
+                            <a class="btn btn-danger" asp-controller="Admin" asp-action="DeleteGame" asp-route-id="@game.Id">Delete Game</a>
+                            <a class="btn btn-danger" asp-controller="Admin" asp-action="EditGame" asp-route-id="@game.Id">Edit Game</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+<a  class="btn btn-danger" href='@Url.Action("AddGame", "Admin")'>Add Game</a>
+
+

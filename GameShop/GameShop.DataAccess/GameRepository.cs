@@ -22,5 +22,10 @@ namespace GameShop.EFDataAccess
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<Game> GetGameByCategory( string category)
+        {
+            return dbContext.Games.Where(a => a.Category == category).AsEnumerable();
+        }
     }
 }

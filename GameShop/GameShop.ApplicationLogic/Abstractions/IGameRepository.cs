@@ -8,5 +8,6 @@ namespace GameShop.ApplicationLogic.Abstractions
     {
         Game GetGamebyId(Guid gameId);
         Game GetGameList();
+        IEnumerable<Game> GetGameByCategory(string category);
     }
 }

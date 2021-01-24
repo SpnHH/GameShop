@@ -16,13 +16,15 @@ namespace GameShop.ApplicationLogic.Services
         private ICommentRepository commentRepository;
         private IOrderRepository orderRepository;
         private IRatingRepository ratingRepository;
+        private IWishlistRepository wishlistRepository;
 
         public AdminServices(IAdminRepository adminRepository,
                              IGameRepository gameRepository,
                              IUserRepository userRepository,
                              ICommentRepository commentRepository,
                              IOrderRepository orderRepository,
-                             IRatingRepository ratingRepository
+                             IRatingRepository ratingRepository,
+                             IWishlistRepository wishlistRepository
                             )
         { 
             this.gameRepository = gameRepository;
@@ -31,7 +33,7 @@ namespace GameShop.ApplicationLogic.Services
             this.commentRepository = commentRepository;
             this.orderRepository = orderRepository;
             this.ratingRepository = ratingRepository;
-
+            this.wishlistRepository = wishlistRepository;
         }
         public Admin GetAdminByAdminId(string userId)
         {
@@ -68,7 +70,7 @@ namespace GameShop.ApplicationLogic.Services
 
         }
 
-        public void addGame(String userId, String gameName, float gamePrice, String gameDescription, String Image)
+        public void addGame(String userId, String gameName, float gamePrice, String gameDescription, String Image, int gameStock, string category)
         {
             Guid userIdGuid = Guid.Empty;
             if (!Guid.TryParse(userId, out userIdGuid))
@@ -88,7 +90,9 @@ namespace GameShop.ApplicationLogic.Services
                 Name = gameName,
                 Price = gamePrice,
                 Description = gameDescription,
-                ImageFile = Image
+                ImageFile = Image,
+                Stock = gameStock,
+                Category = category
             }) ;
 
 
@@ -113,48 +117,11 @@ namespace GameShop.ApplicationLogic.Services
             {
                 throw new EntityNotFoundException(userIdGuid);
             }
-            Guid DummyId = Guid.Empty;
-
-
-            var comments = commentRepository.GetCommentByGameId(gameId).ToList();
-            var orders = orderRepository.GetOrderByGameId(gameId).ToList();
-            var ratings = ratingRepository.GetRatingByGameId(gameId).ToList();
-            if (comments != null)
-            {
-                foreach (var comment in comments)
-                {
-                    commentRepository.Delete(comment);
-                }
-            }
-            if (orders != null)
-            {
-                foreach (var order in orders)
-                {
-                    order.GameId = Guid.Empty;
-                    orderRepository.Update(order);
-                    //orderRepository.Add(new Order()
-                    //{                    
-                    //    Id = order.Id,
-                    //    User = order.User,
-                    //    Date = order.Date,
-                    //    TotalValue = order.TotalValue,
-                    //    GameId = DummyId
-                    //});
-                }
-
-                if (ratings != null)
-                {
-                    foreach (var rating in ratings)
-                    {
-                        ratingRepository.Delete(rating);
-                    }
-                }
-
-                gameRepository.Delete(game);
+            game.Stock = 0;
+            gameRepository.Update(game);
 
             }
-        }
-        public void editGame(String userId, Guid gameId , String gameName, float Price, String gameDescription)
+        public void editGame(String userId, Guid gameId , String gameName, float Price, String gameDescription, int Stock, string category)
         {
             Guid userIdGuid = Guid.Empty;
             if (!Guid.TryParse(userId, out userIdGuid))
@@ -177,10 +144,13 @@ namespace GameShop.ApplicationLogic.Services
             game.Name = gameName;
             game.Price = Price;
             game.Description = gameDescription;
-
+            game.Stock = Stock;
+            game.Category = category;
             gameRepository.Update(game);
 
         }
+        
+
 
     }
 }

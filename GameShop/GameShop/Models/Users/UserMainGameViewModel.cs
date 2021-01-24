@@ -11,5 +11,6 @@ namespace GameShop.Models.Users
         public Game Game { get; set; }
         public IEnumerable<Comment> Comments { get; set; }
         public float Rating { get; set; }
+        public string Category { get; set; }
     }
 }

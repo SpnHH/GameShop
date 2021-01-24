@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\traia\\source\\repos\\GameShop\\GameShop.ApplicationLogic\\GameShop.ApplicationLogic.csproj": {}
+    "C:\\Users\\Traian\\source\\repos\\GameShop\\GameShop.ApplicationLogic\\GameShop.ApplicationLogic.csproj": {}
   },
   "projects": {
-    "C:\\Users\\traia\\source\\repos\\GameShop\\GameShop.ApplicationLogic\\GameShop.ApplicationLogic.csproj": {
+    "C:\\Users\\Traian\\source\\repos\\GameShop\\GameShop.ApplicationLogic\\GameShop.ApplicationLogic.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\traia\\source\\repos\\GameShop\\GameShop.ApplicationLogic\\GameShop.ApplicationLogic.csproj",
+        "projectUniqueName": "C:\\Users\\Traian\\source\\repos\\GameShop\\GameShop.ApplicationLogic\\GameShop.ApplicationLogic.csproj",
         "projectName": "GameShop.ApplicationLogic",
-        "projectPath": "C:\\Users\\traia\\source\\repos\\GameShop\\GameShop.ApplicationLogic\\GameShop.ApplicationLogic.csproj",
-        "packagesPath": "C:\\Users\\traia\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\traia\\source\\repos\\GameShop\\GameShop.ApplicationLogic\\obj\\",
+        "projectPath": "C:\\Users\\Traian\\source\\repos\\GameShop\\GameShop.ApplicationLogic\\GameShop.ApplicationLogic.csproj",
+        "packagesPath": "C:\\Users\\Traian\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Traian\\source\\repos\\GameShop\\GameShop.ApplicationLogic\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\traia\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Traian\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -26,6 +26,7 @@
         },
         "frameworks": {
           "netstandard2.0": {
+            "targetAlias": "netstandard2.0",
             "projectReferences": {}
           }
         },
@@ -37,6 +38,7 @@
       },
       "frameworks": {
         "netstandard2.0": {
+          "targetAlias": "netstandard2.0",
           "dependencies": {
             "Microsoft.AspNet.Identity.EntityFramework": {
               "target": "Package",
@@ -91,7 +93,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.300\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }

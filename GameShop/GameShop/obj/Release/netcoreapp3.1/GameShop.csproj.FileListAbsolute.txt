@@ -1,0 +1,7 @@
+C:\Users\Traian\source\repos\GameShop\GameShop\obj\Release\netcoreapp3.1\GameShop.csprojAssemblyReference.cache
+C:\Users\Traian\source\repos\GameShop\GameShop\obj\Release\netcoreapp3.1\GameShop.AssemblyInfoInputs.cache
+C:\Users\Traian\source\repos\GameShop\GameShop\obj\Release\netcoreapp3.1\GameShop.AssemblyInfo.cs
+C:\Users\Traian\source\repos\GameShop\GameShop\obj\Release\netcoreapp3.1\GameShop.csproj.CoreCompileInputs.cache
+C:\Users\Traian\source\repos\GameShop\GameShop\obj\Release\netcoreapp3.1\GameShop.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Traian\source\repos\GameShop\GameShop\obj\Release\netcoreapp3.1\GameShop.RazorAssemblyInfo.cache
+C:\Users\Traian\source\repos\GameShop\GameShop\obj\Release\netcoreapp3.1\GameShop.RazorAssemblyInfo.cs

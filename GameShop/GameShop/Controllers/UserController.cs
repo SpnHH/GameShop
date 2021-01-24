@@ -41,19 +41,77 @@ namespace GameShop.Controllers
             return View(gameVM);
         }
 
+        public IActionResult ViewCart([FromRoute] string id)
+        {
+            var carts = userServices.GetCartById(id);
+            var game = userServices.GetGameList();
+            var gameVM = new ViewCart { Orders = carts, Games = game };
+            return View(gameVM);
+        }
+
+        public IActionResult DeleteOrder([FromRoute] string id)
+        {
+          
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            userServices.deleteOrder(id);
+            return Redirect(Url.Action("Index", "User"));
+        }
+
         public ActionResult Index()
         {
             try
+            {        
+                    var GameList = userServices.GetGameList();
+                    return View(new UserGameViewModel { Games = GameList });
+
+            }
+            catch (Exception)
             {
-                //var userId = userManager.GetUserId(User);
-                //if (userId == null)
-                //{
-                //    return BadRequest("Null");
-                //}           
+                return BadRequest("aici se blocheaza");
+            }
+        }
+ 
+        public ActionResult ViewGamesRPG()
+        {
+            try
+            {
+                string cat = "RPG";
+                    var GameList = userServices.GetGameByCategory(cat);
+                    return View(new UserGameViewModel { Games = GameList });  
 
-                var GameList = userServices.GetGameList();
+            }
+            catch (Exception)
+            {
+                return BadRequest("aici se blocheaza");
+            }
+        }
 
-                return View(new UserGameViewModel {Games = GameList });
+        public ActionResult ViewGamesAdventure()
+        {
+            try
+            {
+                string cat = "Adventure";
+                var GameList = userServices.GetGameByCategory(cat);
+                return View(new UserGameViewModel { Games = GameList });
+
+            }
+            catch (Exception)
+            {
+                return BadRequest("aici se blocheaza");
+            }
+        }
+        public ActionResult ViewGamesArcade()
+        {
+            try
+            {
+                string cat = "Arcade";
+                var GameList = userServices.GetGameByCategory(cat);
+                return View(new UserGameViewModel { Games = GameList });
+
             }
             catch (Exception)
             {
@@ -171,9 +229,89 @@ namespace GameShop.Controllers
 
         }
 
-       
+        [HttpPost]
+        public IActionResult AddCart([FromForm] AddCartModelView model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            var userId = userManager.GetUserId(User);
+            userServices.addToCart(userId, model.GameId);
+            return RedirectToAction("Index");
+            // return Redirect(Url.Action("Index", "Admin"));
+        }
+
+        [HttpGet]
+        public IActionResult AddCart([FromRoute] string id)
+        {
+            var game = userServices.GetGamebyId(id).Single();
+            var gameVM = new AddCartModelView { GameId = game.Id };
+            return View(gameVM);
+        }
+
+            [HttpPost]
+        public IActionResult AddWish([FromForm] AddOrderModelView model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            var userId = userManager.GetUserId(User);
+            userServices.addWish(userId, model.GameId);
+            return RedirectToAction("Index");
+            // return Redirect(Url.Action("Index", "Admin"));
+        }
+
+        [HttpGet]
+        public IActionResult AddWish([FromRoute] string id)
+        {
+            var game = userServices.GetGamebyId(id).Single();
+            var gameVM = new AddWishModelView { GameId = game.Id };
+            return View(gameVM);
+
+        }
+
+        [HttpPost]
+        public IActionResult AddBill([FromForm] AddBillModelView model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            var userId = userManager.GetUserId(User);
+            userServices.addBill(userId, model.GameId, model.Address, model.PhoneNumber, model.CardNumber,model.ExpirationDate, model.CVV,model.TotalValue);
+            return RedirectToAction("Index");
+        }
+        [HttpGet]
+        public IActionResult AddBill([FromRoute] string id)
+        {
+            var game = userServices.GetGamebyId(id).Single();
+            var gameVM = new AddBillModelView { Address = null, CardNumber = null, PhoneNumber = null, CVV = null, ExpirationDate = null, TotalValue = 0, GameId = game.Id };
+            return View(gameVM);
+        }
 
 
+        public IActionResult ViewBills([FromRoute] string id)
+        {
+            var bills = userServices.GetBillsByUserId(id);
+            var game = userServices.GetGameList();
+            var gameVM = new ViewBills { Bills = bills, Games = game };
+            return View(gameVM);
+        }
+
+        public IActionResult DeleteCart([FromRoute] string id)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            userServices.deleteCart(id);
+            return Redirect(Url.Action("Index", "User"));
+        }
     }
 
 }

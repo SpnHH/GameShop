@@ -17,7 +17,9 @@ namespace GameShop.EFDataAccess
         public DbSet<Order> Orders { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Rating> Ratings { get; set; }
-    
+        public DbSet<ShoppingCart> ShoppingCart { get; set; }
+
+        public DbSet<Bill> Bills { get; set; }
     }
 }
 
