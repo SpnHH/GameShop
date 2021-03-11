@@ -20,6 +20,7 @@
         <div class="product-caption">
             <h4 align="center" style="color:black">@Model.Game.Name </h4>
             <h4 align="center" style="color:black">@Model.Game.Price $ </h4>
+            <h4 align="center" style="color:black">Descrition: @Model.Game.Description</h4>
             <h4 align="center" style="color:black">Average ratings: @Model.Rating  </h4>
         </div>
         @if (User.IsInRole("User") || User.IsInRole("Admin"))
